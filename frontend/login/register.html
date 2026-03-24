@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Registration - EmpTrack</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="title">EmpTrack</h1>
+
+        <div class="login-box">
+            <h2>Create Employee Account</h2>
+            <p style="font-size: 14px; color: #666; margin-bottom: 20px;">
+                Please fill in your details to set up your official portal access.
+            </p>
+
+            <input type="text" id="name" placeholder="Full Name">
+            <input type="text" id="username" placeholder="Choose Username">
+            <input type="password" id="password" placeholder="Create Password">
+
+            <button onclick="register()" style="cursor: pointer; font-weight: 700;">
+                Register Account
+            </button>
+
+            <div class="links">
+                <a href="login.html">Already have an account? Back to Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+
+</body>
+</html>

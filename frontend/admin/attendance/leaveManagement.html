@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leave Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #4318ff;
+            --secondary: #6f42c1;
+            --success: #05cd99;
+            --danger: #ee5d50;
+            --warning: #ffb547;
+            --bg-body: #f4f7fe;
+            --text-main: #1b2559;
+            --text-grey: #a3aed0;
+            --card-shadow: 0px 18px 40px rgba(112, 144, 176, 0.12);
+        }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: var(--bg-body); 
+            margin: 0; 
+            padding: 40px 20px; 
+            color: var(--text-main);
+        }
+
+        .admin-box { 
+            max-width: 1000px; 
+            margin: auto; 
+            background: white; 
+            padding: 40px; 
+            border-radius: 25px; 
+            box-shadow: var(--card-shadow); 
+            text-align: center;
+            border: 1px solid #f1f4f9;
+        }
+
+        h2 { font-weight: 800; font-size: 28px; margin-bottom: 8px; color: var(--text-main); }
+        p { color: var(--text-grey); font-weight: 500; margin-bottom: 30px; }
+
+        .btn-check { 
+            background: var(--primary); 
+            color: white; 
+            padding: 16px 40px; 
+            border: none; 
+            border-radius: 16px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: 700; 
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(67, 24, 255, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-check:hover { transform: translateY(-3px); box-shadow: 0 14px 24px rgba(67, 24, 255, 0.3); }
+
+        /* TABLE STYLING */
+        .request-table { 
+            width: 100%; 
+            border-collapse: separate; 
+            border-spacing: 0 12px; 
+            margin-top: 35px; 
+            display: none; 
+        }
+
+        th { 
+            padding: 15px; 
+            color: var(--text-grey); 
+            text-align: left; 
+            font-size: 13px; 
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        td { 
+            padding: 20px 15px; 
+            background: #fff; 
+            border-top: 1px solid #f1f4f9;
+            border-bottom: 1px solid #f1f4f9;
+            font-weight: 600;
+        }
+
+        /* Rounding corners of rows */
+        td:first-child { border-left: 1px solid #f1f4f9; border-radius: 15px 0 0 15px; }
+        td:last-child { border-right: 1px solid #f1f4f9; border-radius: 0 15px 15px 0; }
+
+        tr:hover td { background-color: #fcfdfe; }
+
+        /* BADGES */
+        .status-badge { 
+            font-weight: 800; 
+            padding: 8px 16px; 
+            border-radius: 10px; 
+            font-size: 11px; 
+            text-transform: uppercase; 
+            display: inline-block;
+        }
+        .pending { background: #fff8eb; color: var(--warning); }
+        .approved { background: #e6faf5; color: var(--success); }
+        .rejected { background: #fff5f5; color: var(--danger); }
+
+        /* ACTION BUTTONS */
+        .btn-acc { 
+            background: var(--success); 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: 700;
+            transition: 0.2s;
+        }
+        .btn-rej { 
+            background: #fef0f0; 
+            color: var(--danger); 
+            border: 1px solid #ffdada; 
+            padding: 10px 20px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: 700;
+            margin-left: 8px;
+            transition: 0.2s;
+        }
+        .btn-acc:hover { background: #04b386; }
+        .btn-rej:hover { background: var(--danger); color: white; }
+
+        .btn-back { 
+            background: white; 
+            color: var(--text-grey); 
+            border: 1px solid #e9edf7; 
+            padding: 12px 24px; 
+            border-radius: 14px; 
+            cursor: pointer; 
+            margin-top: 30px; 
+            font-weight: 700;
+            transition: 0.3s;
+        }
+        .btn-back:hover { background: #1b2559; color: white; }
+
+        small { font-size: 12px; font-weight: 500; }
+    </style>
+</head>
+<body>
+
+    <div class="admin-box">
+        <h2><i class="fas fa-umbrella-beach" style="color: var(--primary);"></i> Leave Administration</h2>
+        <p>Manage and review all employee leave requests with a single click.</p>
+        
+        <button class="btn-check" id="mainBtn" onclick="loadEmployeeRequests()">
+            <i class="fas fa-envelope-open-text"></i> Check Employee Leave Requests
+        </button>
+
+        <table class="request-table" id="leaveTable">
+            <thead>
+                <tr>
+                    <th>Employee Details</th>
+                    <th>Reason for Leave</th>
+                    <th>Status</th>
+                    <th style="text-align: center;">Action</th>
+                </tr>
+            </thead>
+            <tbody id="leaveBody"></tbody>
+        </table>
+
+        <br>
+        <button class="btn-back" onclick="location.href='../dashboard/dashboard.html'">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </button>
+    </div>
+
+    <script>
+        const API_URL = "http://localhost:5000/api/admin";
+
+        // Fetches all leave applications from the server
+        async function loadEmployeeRequests() {
+            try {
+                const res = await fetch(`${API_URL}/all-leaves`);
+                if (!res.ok) throw new Error("Server returned an error");
+                
+                const data = await res.json();
+                
+                const table = document.getElementById("leaveTable");
+                const tbody = document.getElementById("leaveBody");
+                const btn = document.getElementById("mainBtn");
+                
+                // Show the table and update the main button text
+                table.style.display = "table"; 
+                btn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh Requests';
+                tbody.innerHTML = "";
+
+                // Handle empty database case
+                if (data.length === 0) {
+                    tbody.innerHTML = "<tr><td colspan='4' style='text-align:center; padding: 40px; color: var(--text-grey);'>No leave requests found.</td></tr>";
+                    return;
+                }
+
+                // Render requests in descending order (latest first)
+                data.reverse().forEach(leave => {
+                    const statusClass = leave.status.toLowerCase();
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>
+                                <div style="display:flex; align-items:center; gap:12px; text-align:left;">
+                                    <div style="background:#f4f7fe; padding:10px; border-radius:10px; color:var(--primary);">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div>
+                                        <span style="font-weight:800; color:var(--text-main);">${leave.name}</span><br>
+                                        <small style="color:var(--text-grey);">ID: ${leave.empId}</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="color:#555; max-width: 250px;">${leave.reason}</td>
+                            <td><span class="status-badge ${statusClass}">${leave.status}</span></td>
+                            <td style="text-align: center;">
+                                ${leave.status === 'Pending' ? `
+                                    <button class="btn-acc" onclick="processLeave('${leave._id}', 'Approved')">Accept</button>
+                                    <button class="btn-rej" onclick="processLeave('${leave._id}', 'Rejected')">Reject</button>
+                                ` : `<span style="color:var(--text-grey); font-size:12px;"><i class="fas fa-check-double"></i> Processed</span>`}
+                            </td>
+                        </tr>`;
+                });
+            } catch (err) {
+                console.error("Fetch Error:", err);
+                alert("Error loading requests!");
+            }
+        }
+
+        // Handles approval or rejection of a specific request
+        async function processLeave(id, newStatus) {
+            if(!confirm(`Are you sure you want to mark this as ${newStatus}?`)) return;
+
+            try {
+                const res = await fetch(`${API_URL}/update-leave-status`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ id, status: newStatus })
+                });
+
+                const result = await res.json();
+
+                if (res.ok) {
+                    alert(`Leave ${newStatus} successfully! Notification sent to employee. ✅`);
+                    loadEmployeeRequests(); 
+                } else {
+                    alert("Error: " + result.message);
+                }
+            } catch (err) {
+                console.error("Update Error:", err);
+                alert("Update failed!");
+            }
+        }
+    </script>
+</body>
+</html>

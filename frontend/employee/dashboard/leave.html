@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Management - EMP TRACK</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: #f4f7f6; padding: 20px; }
+        .leave-card { max-width: 700px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .status-badge { padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: bold; text-transform: uppercase; }
+        .pending { background: #fff3cd; color: #856404; }
+        .approved { background: #d4edda; color: #155724; }
+        .rejected { background: #f8d7da; color: #721c24; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border-bottom: 1px solid #eee; padding: 12px; text-align: left; }
+    </style>
+</head>
+<body onload="displayMyLeaves()">
+    <div class="leave-card">
+        <h2 style="color: #6f42c1; text-align: center;">🌴 Leave Request & Status</h2>
+        
+        <div class="form-group">
+            <textarea id="leaveReason" placeholder="Enter reason for leave..." style="width:100%; height:80px; padding:10px; border-radius:8px; border:1px solid #ddd;"></textarea>
+            <button onclick="applyLeave()" style="width:100%; background:#6f42c1; color:white; padding:12px; border:none; border-radius:8px; margin-top:10px; cursor:pointer; font-weight:bold;">Submit Request</button>
+        </div>
+
+        <h3 style="margin-top:30px;">My Leave History</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Reason</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="myLeaveStatus"></tbody>
+        </table>
+        <button onclick="location.href='dashboard.html'" style="margin-top:20px; border:none; background:none; color:#666; cursor:pointer;">← Back to Dashboard</button>
+    </div>
+    <script src="leave.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            margin: 0; background: #ffffff; 
+            display: flex; align-items: center; justify-content: center; 
+            height: 100vh; text-align: center;
+        }
+        .container { padding: 50px; max-width: 800px; }
+        h1 { font-size: 3.5rem; color: #1b2559; margin-bottom: 20px; letter-spacing: -2px; }
+        span { color: #4318ff; }
+        p { font-size: 1.3rem; color: #a3aed0; line-height: 1.8; font-weight: 500; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome Back, <span id="user_name">Employee</span>! 👋</h1>
+        <p>This is your professional Employee Dashboard. Track your daily attendance, manage salary slips, and apply for leaves seamlessly. Click on your profile photo at the top right corner to view or update your personal account details.</p>
+    </div>
+    <script>
+        const emp = JSON.parse(localStorage.getItem("loggedInEmployee"));
+        if(emp) document.getElementById('user_name').innerText = emp.name;
+    </script>
+</body>
+</html>

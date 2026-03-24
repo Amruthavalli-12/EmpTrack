@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Registration - EMP TRACK</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+    <div class="register-container">
+        <h2>Create Employee Account</h2>
+        <p>Please enter the unique ID provided by your Administrator to begin registration.</p>
+        
+        <div class="form-box">
+            <input type="text" id="regEmpID" placeholder="Enter Employee ID (e.g., 101)">
+            <input type="text" id="regUsername" placeholder="Create Username">
+            <input type="password" id="regPassword" placeholder="Create Password">
+            
+            <button onclick="registerEmployeeAccount()" style="background: #28a745; color: white; padding: 12px; cursor: pointer; width: 100%; border: none; border-radius: 5px; font-weight: bold;">
+                Register Account
+            </button>
+        </div>
+        <br>
+        <div style="text-align: center;">
+            <a href="login.html" style="color: #666; text-decoration: none; font-size: 14px;">
+                Already have an account? Login here
+            </a>
+        </div>
+    </div>
+
+    <script src="employeeAuth.js"></script>
+</body>
+</html>

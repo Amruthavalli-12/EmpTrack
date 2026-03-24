@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmpTrack - Enterprise Management Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+        /* --- GLOBAL STYLING --- */
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        
+        body { 
+            margin: 0; height: 100vh; display: flex; overflow: hidden;
+            /* Background: Corporate Environment Theme */
+            background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
+                        url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover; background-position: center;
+        }
+
+        /* --- BRANDING SECTION --- */
+        .intro-side { flex: 0.7; padding: 60px; display: flex; flex-direction: column; justify-content: center; color: white; z-index: 1; }
+        
+        .logo-box {
+            width: 70px; height: 70px; background: #00d2ff; border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 32px; color: white; 
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.6);
+            animation: flip3D 4s ease-in-out infinite;
+        }
+
+        .intro-side h1 { 
+            font-size: 4.5rem; font-weight: 800; margin: 15px 0 0;
+            background: linear-gradient(to right, #00d2ff, #ffffff);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            opacity: 0; animation: slideUpFade 1s ease-out 0.2s forwards;
+            letter-spacing: -2px;
+        }
+        
+        .intro-side p { 
+            color: #f1f5f9; font-size: 1.25rem; margin-top: 15px; max-width: 500px; 
+            line-height: 1.6; opacity: 0; animation: slideUpFade 1s ease-out 0.4s forwards;
+        }
+
+        /* --- LOGIN ARCHITECTURE --- */
+        .login-side { flex: 1.3; display: flex; align-items: stretch; justify-content: center; gap: 30px; padding: 100px 50px; }
+
+        .login-card {
+            width: 340px; 
+            display: flex; flex-direction: column; padding: 50px 40px; 
+            border-radius: 35px;
+            background: rgba(255, 255, 255, 0.08); 
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white; text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            animation: cardEntrance 0.8s cubic-bezier(0.2, 1, 0.3, 1) backwards;
+        }
+
+        .login-card h2 { font-weight: 800; margin-bottom: 25px; font-size: 1.6rem; color: #fff; }
+
+        input { 
+            width: 100%; padding: 14px 18px; margin: 12px 0; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 14px; 
+            background: rgba(0, 0, 0, 0.35); color: #fff; outline: none; font-size: 14px;
+        }
+        input::placeholder { color: rgba(255, 255, 255, 0.7); }
+        input:focus { border: 1.5px solid #00d2ff; background: rgba(0, 0, 0, 0.5); }
+
+        .btn-container { margin-top: auto; width: 100%; }
+        .btn { 
+            width: 100%; padding: 15px; border: none; border-radius: 14px; font-weight: 700; 
+            cursor: pointer; text-transform: uppercase; letter-spacing: 0.8px; font-size: 0.85rem; margin-top: 10px;
+        }
+        .btn-admin { background: #ffffff; color: #0f172a; }
+        .btn-emp { background: linear-gradient(135deg, #00d2ff, #0070ff); color: white; }
+        .btn-outline { background: transparent; border: 1.5px solid #fff; color: #fff; }
+        .btn:hover { transform: scale(1.02); filter: brightness(1.1); }
+
+        .link-text { color: #00d2ff; font-size: 13px; cursor: pointer; display: block; text-align: right; margin-top: 5px; font-weight: 700; }
+
+        /* --- MODAL SYSTEM --- */
+        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:999; backdrop-filter: blur(12px); }
+        .modal { 
+            display:none; position:fixed; top:50%; left:50%; transform: translate(-50%, -50%); 
+            width: 650px; background: white; z-index:1000; border-radius:35px; overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+        .modal-content { display: flex; }
+        .modal-left { flex: 1; background: #0f172a; padding: 45px; color: white; display: flex; flex-direction: column; justify-content: center; }
+        .modal-right { flex: 1.2; padding: 45px; color: #1e293b; background: #ffffff; }
+        .modal input { background: #f8fafc; color: #0f172a; border: 2.5px solid #e2e8f0; font-weight: 600; }
+
+        /* --- ANIMATIONS --- */
+        @keyframes flip3D { 0% { transform: rotateY(0deg); } 50% { transform: rotateY(180deg); } 100% { transform: rotateY(360deg); } }
+        @keyframes slideUpFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes cardEntrance { from { opacity: 0; transform: scale(0.9) translateY(40px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="intro-side">
+        <div class="logo-box"><i class="fas fa-bolt"></i></div>
+        <h1>EmpTrack</h1>
+        <p>Premium management ecosystem. Track performance, visualize growth, and manage records with absolute clarity.</p>
+    </div>
+
+    <div class="login-side">
+        <div class="login-card">
+            <div style="font-size: 40px; color: #00d2ff; margin-bottom: 15px;"><i class="fas fa-user-shield"></i></div>
+            <h2>Admin Login</h2>
+            <div style="flex-grow:1;">
+                <input type="text" id="adminUser" placeholder="Admin Username">
+                <input type="password" id="adminPass" placeholder="Password">
+            </div>
+            <div class="btn-container">
+                <button class="btn btn-admin" onclick="adminLogin()">Login Dashboard</button>
+            </div>
+        </div>
+
+        <div class="login-card" style="border-top: 5px solid #00d2ff;">
+            <div style="font-size: 40px; color: #00d2ff; margin-bottom: 15px;"><i class="fas fa-user-circle"></i></div>
+            <h2>Employee Portal</h2>
+            <div style="flex-grow:1;">
+                <input type="text" id="empUser" placeholder="Username">
+                <input type="password" id="empPass" placeholder="Password">
+                <a class="link-text" onclick="toggleModal('forgotModal', true)">Forgot Password?</a>
+            </div>
+            <div class="btn-container">
+                <button class="btn btn-emp" onclick="employeeLogin()">Login Employee</button>
+                <button class="btn btn-outline" onclick="toggleModal('regModal', true)">Create Account</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay" class="overlay" onclick="toggleModal('', false)"></div>
+
+    <div id="regModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-left">
+                <i class="fas fa-user-plus" style="font-size: 50px; margin-bottom: 20px; color: #00d2ff;"></i>
+                <h2>Registration</h2>
+                <p>Register using your unique employee identification code provided by HR.</p>
+            </div>
+            <div class="modal-right">
+                <h3 style="margin:0 0 15px; color: #0f172a;">New Account</h3>
+                <input type="text" id="regID" placeholder="Employee ID">
+                <input type="text" id="regUser" placeholder="Username">
+                <input type="password" id="regPass" placeholder="Password">
+                <button class="btn btn-emp" style="margin-top:20px;" onclick="registerEmployee()">Register Now</button>
+                <button style="border:none; background:none; color:#94a3b8; cursor:pointer; width:100%; margin-top:15px; font-weight:600;" onclick="toggleModal('regModal', false)">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="forgotModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-left" style="background: #0070ff;">
+                <i class="fas fa-key" style="font-size: 50px; margin-bottom: 20px;"></i>
+                <h2>Recovery</h2>
+                <p>Verify your credentials to reset your password securely.</p>
+            </div>
+            <div class="modal-right">
+                <h3 style="margin:0 0 15px; color: #0f172a;">Update Password</h3>
+                <input type="text" id="forgotID" placeholder="Employee ID">
+                <input type="text" id="forgotUser" placeholder="Username">
+                <input type="password" id="newPass" placeholder="New Password">
+                <button class="btn btn-emp" style="margin-top:20px;" onclick="resetPassword()">Update Password</button>
+                <button style="border:none; background:none; color:#94a3b8; cursor:pointer; width:100%; margin-top:15px; font-weight:600;" onclick="toggleModal('forgotModal', false)">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+
+    <script>
+        /**
+         * Global Modal Logic: Handles visibility for Registration and Recovery panels.
+         */
+        function toggleModal(id, show) {
+            const overlay = document.getElementById('overlay');
+            if(overlay) overlay.style.display = show ? 'block' : 'none';
+            
+            if(id) {
+                const modal = document.getElementById(id);
+                if(modal) modal.style.display = show ? 'block' : 'none';
+            }
+            
+            if(!show) {
+                document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+            }
+        }
+    </script>
+</body>
+</html>

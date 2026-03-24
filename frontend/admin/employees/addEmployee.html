@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management - Add/Update</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-page: #f4f7fe; 
+            --accent-indigo: #4318ff;
+            --logo-cyan: #00d2ff;
+            --text-main: #1b2559;
+            --text-grey: #a3aed0;
+            --card-shadow: 0px 18px 40px rgba(112, 144, 176, 0.12);
+        }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: var(--bg-page); 
+            color: var(--text-main);
+            padding: 40px; 
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1150px; margin: auto; }
+        
+        h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 30px; color: var(--text-main); letter-spacing: -1px; }
+
+        .nav-buttons { margin-bottom: 25px; display: flex; gap: 15px; }
+        .nav-buttons button { 
+            padding: 12px 22px; cursor: pointer; border-radius: 15px; 
+            border: 1px solid #e9edf7; background: white; 
+            color: var(--text-grey); font-weight: 700; display: flex; align-items: center; gap: 10px;
+            box-shadow: var(--card-shadow);
+            transition: 0.3s ease;
+        }
+        .nav-buttons button:hover { 
+            background: var(--accent-indigo); 
+            color: white; 
+            transform: translateY(-3px);
+            border-color: var(--accent-indigo);
+        }
+
+        .form-box { 
+            background: white; padding: 35px; border-radius: 30px; 
+            margin-bottom: 40px; display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px; box-shadow: var(--card-shadow);
+            align-items: center;
+            border: 1px solid #f1f4f9;
+        }
+
+        input, select { 
+            padding: 15px 20px; 
+            border: 1px solid #d1d5db; /* Increased border contrast */
+            border-radius: 15px; 
+            font-size: 0.95rem; 
+            background: #ffffff; 
+            color: #1b2559; 
+            font-weight: 600; 
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        /* Styling for high-visibility placeholders */
+        input::placeholder {
+            color: #a3aed0 !important; 
+            opacity: 1; 
+        }
+
+        input:focus, select:focus { 
+            outline: none; 
+            border-color: #4318ff; 
+            background: #fcfdfe;
+            box-shadow: 0 0 0 4px rgba(67, 24, 255, 0.1); 
+        }
+
+        .btn-group { display: flex; align-items: center; gap: 10px; }
+
+        .save-btn { 
+            background: var(--accent-indigo); color: white; border: none; padding: 16px 30px; 
+            border-radius: 15px; cursor: pointer; font-weight: 800; font-size: 1rem;
+            box-shadow: 0 10px 20px rgba(67, 24, 255, 0.2); white-space: nowrap;
+            transition: 0.3s;
+        }
+        .save-btn:hover { background: #3311cc; transform: scale(1.02); }
+
+        .update-btn { background: var(--logo-cyan); color: white; display: none; box-shadow: 0 10px 20px rgba(0, 210, 255, 0.2); }
+
+        h3 { font-size: 1.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+
+        .table-container { 
+            background: white; border-radius: 30px; overflow: hidden; 
+            box-shadow: var(--card-shadow); border: 1px solid #f1f4f9; 
+        }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        thead tr { background: #fcfdfe; }
+        th { 
+            padding: 20px; color: var(--text-grey); font-size: 0.8rem; 
+            text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #f4f7fe; 
+            font-weight: 800;
+        }
+        td { 
+            padding: 20px; color: var(--text-main); border-bottom: 1px solid #f4f7fe; 
+            font-weight: 600; font-size: 0.95rem; 
+        }
+        tr:hover { background: #f9faff; }
+
+        .fa-edit { color: var(--logo-cyan); cursor: pointer; margin-right: 15px; }
+        .fa-trash { color: #ff5b5b; cursor: pointer; }
+
+    </style>
+</head>
+<body onload="displayEmployees()">
+
+    <div class="container">
+        <h2><i class="fas fa-users-cog" style="color: var(--accent-indigo); margin-right: 12px;"></i> Employee Management</h2>
+
+        <div class="nav-buttons">
+            <button onclick="window.location.href='employeeList.html'">
+                <i class="fas fa-list"></i> View All Employees
+            </button>
+            <button onclick="window.location.href='../dashboard/dashboard.html'">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </button>
+        </div>
+
+        <div class="form-box">
+            <input type="hidden" id="editIndex">
+            
+            <input type="text" id="id" placeholder="ID (e.g. #101)">
+            <input type="text" id="name" placeholder="Full Name">
+            <input type="text" id="dept" placeholder="Department">
+
+            <select id="designation">
+                <option value="" disabled selected>Designation</option>
+                <option value="Professor">Professor</option>
+                <option value="Asst. Professor">Asst. Professor</option>
+                <option value="Lecturer">Lecturer</option>
+                <option value="Staff">Staff</option>
+            </select>
+
+            <input type="text" id="education" placeholder="Education">
+            <input type="number" id="salary" placeholder="Salary">
+            
+            <div class="btn-group">
+                <button id="saveBtn" class="save-btn" onclick="saveEmployee()">
+                    <i class="fas fa-plus-circle"></i> Save Employee
+                </button>
+                <button id="updateBtn" class="save-btn update-btn" onclick="finalizeUpdate()">
+                    <i class="fas fa-sync-alt"></i> Update
+                </button>
+            </div>
+        </div>
+
+        <h3><i class="fas fa-history" style="color: var(--logo-cyan);"></i> Recent Changes Preview</h3>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Dept</th>
+                        <th>Designation</th>
+                        <th>Education</th>
+                        <th style="text-align: center;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="addEmployee.js"></script>
+</body>
+</html>

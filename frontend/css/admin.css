@@ -1,0 +1,144 @@
+body {
+     background: linear-gradient(rgba(196, 58, 58, 0.4), rgba(0, 0, 0, 0.4)), 
+                url('../image_457b8a.png'); 
+    
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* LOGIN PAGE MODIFICATIONS */
+.title {
+    text-align: center;
+    color: rgb(209, 35, 35);
+    margin-top: 40px;
+    font-size: 36px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8); /* Enhances visibility on image */
+}
+
+.login-panels {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 60px;
+}
+
+.login-container {
+    /* Modern Glass-morphism Effect */
+    background: rgba(255, 255, 255, 0.9) !important; 
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    width: 300px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.login-container h2 { color: #5a4bff; margin-bottom: 15px; }
+.login-container input {
+    width: 90%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: white;
+}
+
+.login-container button {
+    background: #5a4bff;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.login-container button:hover { background: #3d2dff; transform: translateY(-2px); }
+
+/* ADMIN DASHBOARD MODULES */
+.dashboard-title {
+    color: white;
+    text-align: center;
+    font-size: 32px;
+    margin-top: 30px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+}
+
+.module-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1000px;
+    margin: 50px auto;
+}
+
+.module {
+    /* Enhanced visibility for Admin Modules */
+    background: rgba(255, 255, 255, 0.92) !important; 
+    padding: 35px;
+    border-radius: 15px;
+    text-align: center;
+    font-weight: bold;
+    color: #333 !important;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transition: 0.4s ease;
+    border: 1px solid rgba(174, 55, 55, 0.5);
+}
+
+.module:hover {
+    transform: scale(1.08);
+    background: #ff7a18 !important; /* Matches Admin theme */
+    color: rgb(205, 80, 80) !important;
+    box-shadow: 0 15px 30px rgba(255, 122, 24, 0.4);
+}
+
+/* DATA TABLES & REPORTS */
+table {
+    width: 95%;
+    margin: 30px auto;
+    border-collapse: collapse;
+    background: white !important; /* Solid background for data readability */
+    color: #333;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th {
+    background: #5a4bff !important;
+    color: white !important;
+    padding: 15px;
+    font-size: 1.1rem;
+}
+
+td {
+    padding: 12px;
+    border: 1px solid #eee;
+    text-align: center;
+}
+
+tr:nth-child(even) { background: #f9f9f9; }
+tr:hover { background: #f1f0ff; }
+
+/* NAVIGATION & CONTROLS */
+#adminControls { text-align: center; margin-top: 20px; }
+#adminControls button {
+    background: #5a4bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 5px;
+}

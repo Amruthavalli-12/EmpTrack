@@ -1,0 +1,51 @@
+body{
+margin:0;
+font-family:Arial;
+}
+
+.container{
+display:flex;
+height:100vh;
+}
+
+/* Sidebar */
+
+.sidebar{
+width:220px;
+background:#2c3e50;
+color :#34495e;
+padding:20px;
+}
+
+.sidebar h2{
+text-align:center;
+}
+
+.sidebar ul{
+list-style:none;
+padding:0;
+}
+
+.sidebar ul li{
+padding:12px;
+cursor:pointer;
+border-bottom:1px solid #34495e;
+}
+
+.sidebar ul li:hover{
+background:#34495e;
+}
+
+/* Main area */
+
+.main{
+flex:1;
+padding:30px;
+background:#306dc7;
+}
+
+#content{
+background:rgb(176, 23, 23);
+padding:20px;
+border-radius:6px;
+}

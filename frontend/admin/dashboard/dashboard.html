@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmpTrack - Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-unified: #f4f7fe; 
+            --logo-cyan: #00d2ff;
+            --accent-indigo: #4318ff;
+            --text-main: #1b2559;
+            --text-grey: #a3aed0;
+        }
+
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.3s ease; }
+        body { margin: 0; height: 100vh; display: flex; background-color: var(--bg-unified); overflow: hidden; }
+
+        /* --- SIDEBAR --- */
+        .sidebar { width: 280px; height: 100vh; background: #ffffff; display: flex; flex-direction: column; padding: 45px 0; border-right: 1px solid #e9edf7; }
+        .sidebar-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 50px; }
+        .logo-box-neon { width: 60px; height: 60px; background: var(--logo-cyan); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 28px; color: white; box-shadow: 0 12px 30px rgba(0, 210, 255, 0.3); margin-bottom: 12px; }
+        .sidebar-header h2 { font-size: 1.8rem; margin: 0; font-weight: 800; color: var(--logo-cyan); text-transform: uppercase; letter-spacing: -1px; }
+
+        .nav-links { flex-grow: 1; padding: 0 15px; }
+        .module-item { display: flex; align-items: center; gap: 15px; padding: 15px 20px; margin-bottom: 8px; border-radius: 15px; cursor: pointer; color: var(--text-grey); font-weight: 700; }
+        .module-item:hover { color: var(--accent-indigo); background: #f7f9ff; transform: translateX(5px); }
+        .module-item.active { background: var(--accent-indigo); color: white; box-shadow: 0 10px 20px rgba(67, 24, 255, 0.2); }
+
+        /* --- MAIN CONTENT --- */
+        .main-content { flex: 1; display: flex; flex-direction: column; height: 100vh; }
+        .top-bar { padding: 40px 50px; }
+        .top-bar h1 { font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin: 0; }
+
+        .welcome-container { flex: 1; display: flex; align-items: center; justify-content: center; }
+        .welcome-card { text-align: center; max-width: 500px; padding: 40px; }
+        
+        .icon-circle {
+            width: 120px; height: 120px; background: white; border-radius: 40px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 45px; color: var(--accent-indigo); margin: 0 auto 30px;
+            box-shadow: 0 20px 40px rgba(112, 144, 176, 0.15);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .welcome-card h2 { font-size: 2rem; font-weight: 800; color: var(--text-main); margin-bottom: 15px; }
+        .welcome-card p { color: var(--text-grey); font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px; }
+        
+        .instruction-tag { 
+            display: inline-block; padding: 8px 20px; background: #e0e7ff; 
+            color: var(--accent-indigo); border-radius: 30px; font-weight: 800; font-size: 0.85rem;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .logout-box { padding: 0 15px; }
+        .logout-btn { padding: 16px; border-radius: 15px; background: #fff5f5; color: #ff5b5b; text-align: center; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .logout-btn:hover { background: #ff5b5b; color: white; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-box-neon"><i class="fas fa-bolt"></i></div>
+            <h2>EmpTrack</h2>
+        </div>
+        <nav class="nav-links">
+            <div class="module-item active" onclick="openEmployee()">
+                <i class="fas fa-id-badge"></i> Employee Data
+            </div>
+            <div class="module-item" onclick="openAttendance()">
+                <i class="fas fa-calendar-check"></i> Attendance
+            </div>
+            <div class="module-item" onclick="openLeave()">
+                <i class="fas fa-clock"></i> Leave Portal
+            </div>
+            <div class="module-item" onclick="openPayroll()">
+                <i class="fas fa-wallet"></i> Salary Hub
+            </div>
+            <div class="module-item" onclick="changePage('add_timetable.html', this)">
+                <i class="fas fa-calendar-alt"></i> Manage Timetable
+            </div>
+            <div class="module-item" onclick="openReports()">
+                <i class="fas fa-chart-line"></i> Reports
+            </div>
+            <div class="module-item" onclick="openNotifications()">
+                <i class="fas fa-bell"></i> Alerts
+            </div>
+        </nav>
+        <div class="logout-box">
+            <div class="logout-btn" onclick="logout()"><i class="fas fa-power-off"></i> Logout</div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-bar">
+            <h1>Admin Dashboard</h1>
+        </header>
+
+        <div class="welcome-container">
+            <div class="welcome-card">
+                <div class="icon-circle">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h2>Welcome Back, Admin!</h2>
+                <p>All systems are synchronized with your database. Select a module from the sidebar to manage employee information and track performance.</p>
+                <div class="instruction-tag">
+                    <i class="fas fa-mouse-pointer"></i> &nbsp; Click a module to start
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

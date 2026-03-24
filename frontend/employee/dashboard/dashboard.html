@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard - EMP TRACK</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #4318ff; 
+            --primary-hover: #3311db;
+            --bg-body: #f4f7fe;
+            --sidebar-bg: #ffffff;
+            --text-main: #1b2559;
+            --text-grey: #a3aed0;
+            --card-shadow: 0px 18px 40px rgba(112, 144, 176, 0.12);
+        }
+
+        * { box-sizing: border-box; transition: all 0.2s ease-in-out; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            margin: 0; display: flex; height: 100vh; overflow: hidden; 
+            background-color: var(--bg-body); color: var(--text-main); 
+        }
+
+        /* SIDEBAR */
+        .sidebar { 
+            width: 290px; background: var(--sidebar-bg); 
+            display: flex; flex-direction: column; 
+            border-right: 1px solid #f1f4f9; z-index: 100; 
+        }
+        .sidebar-header { padding: 45px 35px; }
+        .sidebar-header h2 { 
+            margin: 0; font-size: 1.6rem; font-weight: 800; 
+            color: var(--primary); display: flex; align-items: center; gap: 12px; letter-spacing: -1px; 
+        }
+
+        .nav-links { flex: 1; padding: 10px 20px; }
+        .nav-item {
+            display: flex; align-items: center; padding: 16px 22px; 
+            color: var(--text-grey); text-decoration: none; 
+            border-radius: 18px; margin-bottom: 10px; cursor: pointer; 
+            font-weight: 700; font-size: 15.5px;
+        }
+        .nav-item i { width: 35px; font-size: 1.2rem; }
+        .nav-item:hover { background: #f7f9ff; color: var(--primary); transform: translateX(8px); }
+        .nav-item.active { background: #f4f7fe; color: var(--primary); position: relative; }
+        .nav-item.active::after { 
+            content: ""; position: absolute; right: 0; top: 12px; bottom: 12px; 
+            width: 5px; background: var(--primary); border-radius: 10px 0 0 10px; 
+        }
+
+        .logout-section { padding: 30px 20px; border-top: 1px solid #f1f4f9; }
+        .logout-btn { 
+            width: 100%; background: #fff5f5; color: #ee5d50; border: none; 
+            padding: 15px; border-radius: 18px; cursor: pointer; 
+            font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 10px; 
+        }
+
+        /* MAIN CONTENT */
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        
+        .top-bar { 
+            background: rgba(244, 247, 254, 0.7); backdrop-filter: blur(15px); 
+            padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; 
+        }
+        .page-title-group span { font-size: 14px; color: var(--text-grey); font-weight: 600; }
+        .page-title-group h3 { margin: 5px 0 0 0; font-weight: 800; font-size: 28px; color: var(--text-main); }
+        
+        .user-info { 
+            background: white; padding: 8px 15px; border-radius: 50px; 
+            display: flex; align-items: center; gap: 15px; border: 1px solid #f1f4f9; 
+            cursor: pointer; box-shadow: 0px 10px 30px rgba(112, 144, 176, 0.1);
+        }
+        .user-text h4 { margin: 0; font-size: 16px; font-weight: 700; }
+        .user-text small { color: var(--text-grey); font-weight: 600; }
+
+        .avatar-box { 
+            width: 45px; height: 45px; border-radius: 50%; overflow: hidden; 
+            border: 2.5px solid var(--primary); 
+        }
+        .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .content-frame { flex: 1; padding: 0 30px 30px 30px; }
+        iframe { 
+            width: 100%; height: 100%; border: none; border-radius: 30px; 
+            background: white; box-shadow: var(--card-shadow); 
+        }
+
+        .fade-in { animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body onload="loadDashboard()">
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-bolt"></i> EMP TRACK</h2>
+        </div>
+        <div class="nav-links">
+            <a class="nav-item active" onclick="changePage('welcome.html', this)">
+                <i class="fas fa-home"></i> <span>Dashboard Home</span>
+            </a>
+            <a class="nav-item" onclick="changePage('attendance.html', this)">
+                <i class="fas fa-calendar-check"></i> <span>Attendance Logs</span>
+            </a>
+            <a class="nav-item" onclick="changePage('salary.html', this)">
+                <i class="fas fa-wallet"></i> <span>Salary Slips</span>
+            </a>
+            <a class="nav-item" onclick="changePage('leave.html', this)">
+                <i class="fas fa-paper-plane"></i> <span>Request Leave</span>
+            </a>
+            <a class="nav-item" onclick="changePage('timetable.html', this)">
+                <i class="fas fa-clock"></i> <span>Time Table</span>
+            </a>
+        </div>
+        <div class="logout-section">
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-title-group">
+                <span>Main / <span id="breadcrumb">Dashboard</span></span>
+                <h3>Employee Dashboard</h3>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div class="notif-wrapper" style="position: relative; cursor: pointer;">
+                    <div id="bellIcon" onclick="toggleNotifDropdown()" style="width: 45px; height: 45px; background: white; border-radius: 15px; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f4f9; box-shadow: 0px 10px 30px rgba(112, 144, 176, 0.1);">
+                        <i class="fas fa-bell" style="font-size: 1.2rem; color: var(--primary);"></i>
+                        <span id="notifBadge" style="position: absolute; top: 10px; right: 12px; width: 10px; height: 10px; background: #ee5d50; border: 2px solid white; border-radius: 50%; display: none;"></span>
+                    </div>
+
+                    <div id="notifDropdown" style="display: none; position: absolute; top: 60px; right: 0; width: 320px; background: white; border-radius: 20px; box-shadow: var(--card-shadow); z-index: 1000; padding: 20px; border: 1px solid #f1f4f9;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h4 style="margin: 0; font-size: 16px; font-weight: 800;">Notifications</h4>
+                            <span style="font-size: 11px; background: #f4f7fe; color: var(--primary); padding: 4px 10px; border-radius: 10px; font-weight: 700;">Latest</span>
+                        </div>
+                        
+                        <div id="miniNotifList" style="max-height: 250px; overflow-y: auto;">
+                            <p style="text-align: center; color: var(--text-grey); font-size: 13px;">Checking for alerts...</p>
+                        </div>
+                        
+                        <a onclick="changePage('notifications.html', null); toggleNotifDropdown()" style="display: block; text-align: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid #f1f4f9; color: var(--primary); font-weight: 700; font-size: 13px; text-decoration: none; cursor: pointer;">
+                            See All Notifications <i class="fas fa-arrow-right" style="font-size: 10px; margin-left: 5px;"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="user-info" onclick="openProfile()">
+                    <div class="user-text">
+                        <h4 id="user_display">Loading...</h4>
+                        <small id="emp_id_display">ID: --</small>
+                    </div>
+                    <div class="avatar-box">
+                        <img id="header_user_img" src="default-avatar.png" alt="Profile">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-frame">
+            <iframe id="contentView" src="welcome.html" class="fade-in"></iframe>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

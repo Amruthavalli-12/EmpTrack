@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Notifications - EMP TRACK</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-page: #f4f7fe;
+            --accent-indigo: #4318ff;
+            --text-main: #1b2559;
+            --text-grey: #a3aed0;
+            --card-shadow: 0px 18px 40px rgba(112, 144, 176, 0.12);
+        }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: var(--bg-page); 
+            margin: 0; 
+            padding: 20px; 
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        .notif-container { 
+            max-width: 700px; 
+            margin: 40px auto; 
+            background: white; 
+            padding: 40px; 
+            border-radius: 30px; 
+            box-shadow: var(--card-shadow); 
+        }
+
+        .notif-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f1f4f9;
+        }
+
+        .notif-header h2 { 
+            font-weight: 800; 
+            font-size: 24px; 
+            margin: 0; 
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        .back-btn { 
+            background: #eef2f7; 
+            color: var(--text-main); 
+            padding: 10px 20px; 
+            border-radius: 12px; 
+            text-decoration: none; 
+            font-weight: 700; 
+            font-size: 14px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .back-btn:hover { background: #e2e8f0; transform: translateX(-3px); }
+
+        /* --- NOTIFICATION ITEMS --- */
+        .notif-item { 
+            background: #fff; 
+            border: 1px solid #f1f4f9;
+            padding: 20px; 
+            margin-bottom: 20px; 
+            border-radius: 20px; 
+            transition: 0.3s;
+            position: relative;
+        }
+        .notif-item:hover { 
+            transform: translateY(-5px); 
+            box-shadow: var(--card-shadow);
+            border-color: var(--accent-indigo);
+        }
+
+        .notif-item strong { 
+            color: var(--accent-indigo); 
+            display: flex; 
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-weight: 800;
+        }
+
+        .notif-msg { 
+            color: var(--text-main); 
+            line-height: 1.6; 
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .notif-date { 
+            font-size: 12px; 
+            color: var(--text-grey); 
+            display: block; 
+            margin-top: 15px; 
+            text-align: right; 
+            font-weight: 600;
+        }
+
+        /* Delete Button on Notification */
+        .notif-item button:hover {
+            background: #fee2e2 !important; 
+            color: #ee5d50 !important;    
+            transform: rotate(90deg);
+        }
+
+        .no-notif { 
+            text-align: center; 
+            color: var(--text-grey); 
+            padding: 60px; 
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .fa-spinner { color: var(--accent-indigo); margin-bottom: 15px; font-size: 30px; }
+    </style>
+</head>
+<body onload="fetchMyNotifications()">
+
+    <div class="notif-container">
+        <div class="notif-header">
+            <h2><i class="fas fa-bell" style="color: var(--accent-indigo); margin-right: 10px;"></i> Notifications</h2>
+            <a href="dashboard.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+
+        <div id="notifList">
+            <div class="no-notif">
+                <i class="fas fa-spinner fa-spin"></i><br>
+                Checking for new messages...
+            </div>
+        </div>
+    </div>
+
+    <script src="notifications.js"></script>
+</body>
+</html>

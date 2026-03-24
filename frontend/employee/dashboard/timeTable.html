@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Work Schedule - EmpTrack</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: #f4f7fe; margin: 0; padding: 25px; 
+            color: #1b2559;
+        }
+
+        .tt-card { 
+            background: white; padding: 30px; border-radius: 25px; 
+            box-shadow: 0px 15px 35px rgba(112, 144, 176, 0.1);
+        }
+
+        .header-section {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 25px; border-bottom: 2px solid #f1f4f9; padding-bottom: 15px;
+        }
+
+        .header-section h2 { margin: 0; font-size: 24px; font-weight: 800; }
+
+        .dept-tag {
+            background: #4318ff; color: white; padding: 8px 20px;
+            border-radius: 12px; font-weight: 700; font-size: 14px;
+            box-shadow: 0 5px 15px rgba(67, 24, 255, 0.2);
+        }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+
+        th { 
+            text-align: left; padding: 15px; color: #a3aed0; 
+            font-size: 12px; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        td { padding: 18px 15px; border-bottom: 1px solid #f1f4f9; font-size: 15px; font-weight: 600; }
+
+        .day-name { color: #1b2559; font-weight: 800; width: 150px; }
+
+        .time-box {
+            display: inline-block; background: #f4f7fe; color: #4318ff;
+            padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 13px;
+        }
+
+        .task-name { color: #1b2559; }
+
+        /* No Data Style */
+        .empty-state { text-align: center; padding: 40px; color: #a3aed0; }
+    </style>
+</head>
+<body onload="fetchMyTimetable()">
+
+    <div class="tt-card">
+        <div class="header-section">
+            <h2><i class="fas fa-clock"></i> Weekly Schedule</h2>
+            <div id="dept_badge" class="dept-tag">Loading Dept...</div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Timing</th>
+                    <th>Activity / Task</th>
+                </tr>
+            </thead>
+            <tbody id="tt_body">
+                </tbody>
+        </table>
+    </div>
+
+    <script src="timetable.js"></script>
+</body>
+</html>

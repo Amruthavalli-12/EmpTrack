@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Notifications</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* (Existing CSS preserved; updated groups dropdown styling) */
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        :root {
+            --primary: #4318ff;
+            --success: #05cd99;
+            --danger: #ee5d50;
+            --warning: #ffb547;
+            --bg-body: #f4f7fe;
+            --text-main: #1b2559;
+            --text-grey: #a3aed0;
+            --white: #ffffff;
+            --shadow: 0px 18px 40px rgba(112, 144, 176, 0.12);
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-body); margin: 0; padding: 30px; color: var(--text-main); }
+        .dashboard-title { font-weight: 800; font-size: 26px; margin-bottom: 20px; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
+        .back-btn { background: var(--white); color: var(--text-main); border: 1px solid #e9edf7; padding: 10px 20px; border-radius: 12px; cursor: pointer; font-weight: 700; margin-bottom: 25px; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .back-btn:hover { background: var(--text-main); color: white; }
+        .module-container { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .card { background: var(--white); padding: 30px; border-radius: 20px; box-shadow: var(--shadow); border: none; }
+        h3 { font-weight: 700; margin-top: 0; margin-bottom: 20px; color: var(--text-main); font-size: 20px; }
+        label { font-weight: 700; font-size: 14px; color: var(--text-main); display: block; margin-top: 15px; }
+        select, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 12px; border: 1px solid #e0e5f2; font-family: inherit; background: #fcfdfe; transition: 0.2s; }
+        textarea { resize: vertical; min-height: 120px; }
+        .send-btn { background: var(--primary); color: white; padding: 15px; border: none; width: 100%; border-radius: 14px; cursor: pointer; font-weight: 700; font-size: 16px; margin-top: 20px; box-shadow: 0 10px 20px rgba(67, 24, 255, 0.2); transition: 0.3s; }
+        .clear-btn { background: transparent; color: var(--danger); border: 1px solid var(--danger); padding: 8px 15px; border-radius: 10px; cursor: pointer; font-weight: 700; margin-top: 20px; transition: 0.2s; }
+        .clear-btn:hover { background: var(--danger); color: white; }
+        #notifList { max-height: 400px; overflow-y: auto; }
+        .notif-item { background: #f8f9ff; padding: 15px; border-radius: 15px; margin-bottom: 12px; border-left: 5px solid var(--primary); position: relative; }
+        optgroup { font-weight: 700; color: var(--primary); }
+    </style>
+</head>
+<body>
+    
+    <h2 class="dashboard-title"><i class="fas fa-bullhorn" style="color: var(--primary);"></i> Admin Notifications - Branch Portal</h2>
+    
+    <button class="back-btn" onclick="window.location.href='../dashboard/dashboard.html'">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </button>
+
+    <div class="module-container">
+        <div class="card">
+            <h3><i class="fas fa-paper-plane" style="color: var(--primary);"></i> Send Branch Update</h3>
+            
+            <label><i class="fas fa-building"></i> Select Branch/Group:</label>
+            <select id="notifDept">
+                <option value="All">All Branches (Global)</option>
+                
+                <optgroup label="Core Engineering">
+                    <option value="CSE">Computer Science (CSE)</option>
+                    <option value="AIML">AI & Machine Learning</option>
+                    <option value="DS">Data Science (DS)</option>
+                    <option value="IT">Information Technology (IT)</option>
+                    <option value="ECE">Electronics (ECE)</option>
+                    <option value="EEE">Electrical (EEE)</option>
+                </optgroup>
+
+                <optgroup label="Industrial & Infrastructure">
+                    <option value="MECH">Mechanical</option>
+                    <option value="CIVIL">Civil</option>
+                    <option value="MINING">Mining</option>
+                    <option value="PETROLEUM">Petroleum</option>
+                    <option value="CHEMICAL">Chemical</option>
+                </optgroup>
+
+                <optgroup label="Specialized Sectors">
+                    <option value="AGRICULTURE">Agriculture</option>
+                    <option value="AERONAUTICAL">Aeronautical</option>
+                    <option value="BIOTECH">Biotechnology</option>
+                    <option value="FOOD">Food Technology</option>
+                </optgroup>
+            </select>
+
+            <label><i class="fas fa-comment-dots"></i> Notification Message:</label>
+            <textarea id="notifMsg" placeholder="Type the news or updates here..."></textarea>
+
+            <label><i class="fas fa-flag"></i> Priority Level:</label>
+            <select id="notifPriority">
+                <option value="low">Standard Broadcast</option>
+                <option value="high">Urgent / Important</option>
+            </select>
+
+            <button class="send-btn" onclick="sendNotification()">Send Broadcast Now</button>
+        </div>
+
+        <div class="card">
+            <h3><i class="fas fa-history" style="color: var(--primary);"></i> Broadcast History</h3>
+            <div id="notifList"></div>
+            <button class="clear-btn" onclick="clearAllNotifications()">
+                <i class="fas fa-trash-alt"></i> Clear All History
+            </button>
+        </div>
+    </div>
+
+    <script src="notifications.js"></script>
+</body>
+</html>

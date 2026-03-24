@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-page: #f4f7fe; 
+            --accent-indigo: #4318ff;
+            --logo-cyan: #00d2ff;
+            --text-main: #1b2559;
+            --text-grey: #a3aed0;
+            --card-shadow: 0px 18px 40px rgba(112, 144, 176, 0.12);
+        }
+
+        body { 
+            padding: 40px; 
+            background-color: var(--bg-page); /* Consistent Light Theme */
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--text-main);
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .list-container { max-width: 1200px; margin: auto; }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        h1 { font-size: 2.2rem; font-weight: 800; margin: 0; color: var(--text-main); letter-spacing: -1px; }
+
+        /* Navigation Button - Indigo Theme */
+        .btn-add {
+            background: var(--accent-indigo);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(67, 24, 255, 0.2);
+            transition: 0.3s ease;
+        }
+        .btn-add:hover { background: #3311cc; transform: translateY(-3px); }
+
+        /* --- MODERN TABLE STYLING --- */
+        .table-wrapper {
+            background: #ffffff; 
+            border-radius: 30px; 
+            overflow: hidden; 
+            box-shadow: var(--card-shadow);
+            border: 1px solid #f1f4f9;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        
+        th { 
+            background: #fcfdfe; 
+            color: var(--text-grey); 
+            text-transform: uppercase; 
+            font-size: 0.8rem; 
+            font-weight: 800; 
+            letter-spacing: 1px;
+            padding: 22px 20px;
+            text-align: left;
+            border-bottom: 2px solid #f4f7fe;
+        }
+
+        td { 
+            padding: 20px; 
+            text-align: left; 
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-bottom: 1px solid #f4f7fe;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background-color: #f9faff; }
+
+        .emp-id { font-weight: 800; color: var(--logo-cyan); }
+        .salary-tag { font-weight: 800; color: var(--text-main); }
+        .status-msg { text-align: center; padding: 60px; color: var(--text-grey); font-weight: 700; font-size: 1.1rem; }
+
+        /* Badge for Designation Display */
+        .desig-badge {
+            background: #e0e7ff;
+            color: var(--accent-indigo);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body onload="loadFullList()">
+
+    <div class="list-container">
+        <div class="module-header">
+            <h1><i class="fas fa-users" style="color: var(--accent-indigo); margin-right: 10px;"></i> All Employees List</h1>
+            <button class="btn-add" onclick="window.location.href='addEmployee.html'">
+                <i class="fas fa-user-plus"></i> Manage Employees
+            </button>
+        </div>
+        
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Designation</th>
+                        <th>Education</th>
+                        <th>Salary</th>
+                    </tr>
+                </thead>
+                <tbody id="fullListBody">
+                    <tr><td colspan="6" class="status-msg">
+                        <i class="fas fa-spinner fa-spin" style="color: var(--accent-indigo);"></i> Loading records...
+                    </td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Function to fetch and display the employee list from the API
+        async function loadFullList() {
+            try {
+                const response = await fetch('http://localhost:5000/api/admin/all-employees');
+                
+                if (!response.ok) throw new Error("Database connection error!");
+
+                const employees = await response.json();
+                const tbody = document.getElementById("fullListBody");
+                
+                if (employees.length === 0) {
+                    tbody.innerHTML = "<tr><td colspan='6' class='status-msg'>No records found in the database.</td></tr>";
+                    return;
+                }
+
+                tbody.innerHTML = employees.map(emp => `
+                    <tr>
+                        <td class="emp-id">${emp.empId || 'N/A'}</td> 
+                        <td style="font-weight: 700;">${emp.name}</td>
+                        <td>${emp.dept || 'N/A'}</td>
+                        <td><span class="desig-badge">${emp.designation || 'Staff'}</span></td>
+                        <td>${emp.education || 'N/A'}</td>
+                        <td class="salary-tag">₹${emp.salary ? Number(emp.salary).toLocaleString() : '0'}</td>
+                    </tr>
+                `).join("");
+
+            } catch (err) {
+                console.error("Load Error:", err);
+                document.getElementById("fullListBody").innerHTML = 
+                    "<tr><td colspan='6' class='status-msg' style='color:#ff5b5b;'><i class='fas fa-exclamation-triangle'></i> Server is not connected</td></tr>";
+            }
+        }
+    </script>
+</body>
+</html>

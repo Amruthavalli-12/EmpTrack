@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Payroll Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #4318ff;
+            --secondary: #6f42c1;
+            --success: #05cd99;
+            --danger: #ee5d50;
+            --bg-body: #f4f7fe;
+            --text-main: #1b2559;
+            --text-grey: #a3aed0;
+            --card-shadow: 0px 18px 40px rgba(112, 144, 176, 0.12);
+        }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: var(--bg-body); 
+            margin: 0; padding: 20px; color: var(--text-main);
+        }
+
+        .dashboard-title { font-weight: 800; font-size: 26px; text-align: center; margin: 20px 0; }
+
+        .toolbar {
+            background: white; padding: 20px 30px; border-radius: 20px;
+            box-shadow: var(--card-shadow); margin-bottom: 30px;
+            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;
+        }
+
+        .toolbar-left { display: flex; align-items: center; gap: 15px; }
+
+        select { padding: 10px 15px; border-radius: 12px; border: 1px solid #e0e5f2; font-weight: 600; background: #f8f9ff; outline: none; }
+
+        button { padding: 12px 24px; border-radius: 14px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+
+        .btn-back { background: #fff; border: 1px solid #e9edf7; color: var(--text-grey); }
+        .btn-back:hover { background: var(--text-main); color: white; }
+        
+        .btn-show { background: var(--primary); color: white; box-shadow: 0 10px 20px rgba(67, 24, 255, 0.1); }
+        .btn-pay { background: var(--success); color: white; box-shadow: 0 10px 20px rgba(5, 205, 153, 0.1); }
+        .btn-pay:disabled { background: #cbd5e0; cursor: not-allowed; box-shadow: none; }
+
+        /* Delete Button Style */
+        .btn-delete { 
+            background: #fff5f5; color: var(--danger); border: 1px solid #fed7d7; 
+            padding: 8px 12px; border-radius: 10px; font-size: 14px; transition: 0.2s;
+        }
+        .btn-delete:hover { background: var(--danger); color: white; }
+
+        #payrollContent { background: white; padding: 25px; border-radius: 25px; box-shadow: var(--card-shadow); overflow-x: auto; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        th { padding: 15px; color: var(--text-grey); font-size: 12px; text-transform: uppercase; border-bottom: 1px solid #f1f4f9; text-align: center; letter-spacing: 1px; }
+        td { padding: 18px 10px; border-bottom: 1px solid #f1f4f9; text-align: center; font-weight: 600; }
+        
+        .status-paid { background: #e6faf5; color: var(--success); padding: 6px 12px; border-radius: 10px; font-size: 11px; font-weight: 800; }
+        .empty-row td { padding: 60px; color: var(--text-grey); font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <h2 class="dashboard-title"><i class="fas fa-money-check-alt" style="color: var(--primary);"></i> Employee Payroll Management</h2>
+    
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn-back" onclick="window.location.href='../dashboard/dashboard.html'">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <select id="payrollMonth">
+                <option value="January 2026">January 2026</option>
+                <option value="February 2026">February 2026</option>
+                <option value="March 2026">March 2026</option>
+                <option value="April 2026">April 2026</option>
+            </select>
+            <button class="btn-show" onclick="loadPayroll()">
+                <i class="fas fa-eye"></i> Show Details
+            </button>
+        </div>
+        <button class="btn-pay" id="payBtn" onclick="finalizePayroll()">
+            <i class="fas fa-hand-holding-usd"></i> Finalize & Pay All
+        </button>
+    </div>
+
+    <div id="payrollContent">
+        <table>
+            <thead>
+                <tr>
+                    <th>Emp ID</th>
+                    <th>Name</th>
+                    <th>Branch</th>
+                    <th>Absents</th>
+                    <th>Deduction (₹)</th>
+                    <th>Net Salary (₹)</th>
+                    <th>Status</th>
+                    <th>Action</th> </tr>
+            </thead>
+            <tbody id="payrollTableBody">
+                <tr class="empty-row">
+                    <td colspan="8">
+                        <i class="fas fa-info-circle" style="font-size: 20px; margin-bottom: 10px; display: block;"></i>
+                        Select a month and click "Show Details" to generate the report.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="payroll.js"></script>
+</body>
+</html>

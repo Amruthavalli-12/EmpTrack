@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Analytics Portal</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #4318ff;
+            --success: #05cd99;
+            --info: #36b9cc;
+            --warning: #ffb547;
+            --danger: #ee5d50;
+            --bg-body: #f4f7fe;
+            --text-main: #1b2559;
+            --text-grey: #a3aed0;
+            --card-shadow: 0px 18px 40px rgba(112, 144, 176, 0.12);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            color: var(--text-main);
+        }
+
+        /* --- Dynamic Header with Gradients --- */
+        #dynamicHeader {
+            padding: 50px 20px;
+            text-align: center;
+            color: white;
+            transition: 0.5s all cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #dynamicHeader::after {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(2px); z-index: 1;
+        }
+        
+        #dynamicHeader * { position: relative; z-index: 2; }
+
+        /* Styles for different report themes */
+        .report-header-attendance { background: linear-gradient(135deg, #05cd99 0%, #11a37c 100%); }
+        .report-header-payroll { background: linear-gradient(135deg, #4318ff 0%, #2b00ff 100%); }
+        .report-header-leave { background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%); }
+        .report-header-details { background: linear-gradient(135deg, #36b9cc 0%, #258391 100%); }
+
+        #dynamicHeader h2 { font-size: 32px; font-weight: 800; margin: 0; letter-spacing: -1px; }
+        #dynamicHeader p { opacity: 0.8; font-weight: 500; margin-top: 5px; }
+
+        /* --- Modern Filter Bar --- */
+        .filter-bar {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .filter-group { display: flex; align-items: center; gap: 10px; background: white; padding: 5px 15px; border-radius: 12px; border: 1px solid #e0e5f2; }
+        .filter-group label { font-size: 12px; font-weight: 700; color: var(--text-grey); text-transform: uppercase; }
+
+        select {
+            padding: 8px 10px;
+            border: none;
+            outline: none;
+            font-weight: 700;
+            color: var(--text-main);
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .btn-back {
+            background: var(--text-main);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.3s;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .btn-back:hover { transform: translateX(-5px); background: #000; }
+
+        /* --- Report Containers --- */
+        .report-container {
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #f1f4f9;
+        }
+
+        .card h3 { 
+            margin-top: 0; margin-bottom: 25px; font-weight: 800; 
+            font-size: 18px; color: var(--text-main);
+            display: flex; align-items: center; gap: 10px;
+        }
+
+        /* --- Chart Section --- */
+        #chartContainer {
+            width: 100%;
+            height: 400px;
+            position: relative;
+        }
+
+        /* --- Modern Table Section --- */
+        .table-responsive { overflow-x: auto; }
+        
+        table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
+
+        th {
+            color: var(--text-grey);
+            padding: 15px;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-align: left;
+        }
+
+        td {
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #f1f4f9;
+            border-bottom: 1px solid #f1f4f9;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        td:first-child { border-left: 1px solid #f1f4f9; border-radius: 12px 0 0 12px; }
+        td:last-child { border-right: 1px solid #f1f4f9; border-radius: 0 12px 12px 0; }
+
+        tr:hover td { background-color: #f8faff; }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .filter-bar { padding: 10px; }
+            #dynamicHeader { padding: 30px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="dynamicHeader" class="report-header-attendance">
+        <h2><i class="fas fa-chart-pie"></i> <span id="reportTitle">Attendance Insights</span></h2>
+        <p>Real-time analytics & workforce performance metrics</p>
+    </div>
+    
+    <div class="filter-bar">
+        <button class="btn-back" onclick="window.location.href='../dashboard/dashboard.html'">
+            <i class="fas fa-chevron-left"></i> Dashboard
+        </button>
+        
+        <div class="filter-group">
+            <label><i class="fas fa-file-alt"></i> Report Type</label>
+            <select id="reportType" onchange="applyReportTheme()">
+                <option value="attendance">Attendance Analytics</option>
+                <option value="payroll">Payroll Overview</option>
+                <option value="leave">Leave Statistics</option>
+                <option value="details">Employee Directory</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label><i class="fas fa-sliders-h"></i> Group By</label>
+            <select id="filterCategory" onchange="updateSubFilters()">
+                <option value="all">Summarize All</option>
+                <option value="name">By Employee</option>
+                <option value="dept">By Department</option>
+            </select>
+        </div>
+
+        <select id="subFilter" class="filter-group" style="display:none; border: 1px solid #e0e5f2;" onchange="generateFilteredReport()"></select>
+    </div>
+
+    <div class="report-container">
+        <div class="card">
+            <h3><i class="fas fa-project-diagram" style="color: var(--primary);"></i> Visual Performance Analytics</h3>
+            <div id="chartContainer">
+                <canvas id="reportChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><i class="fas fa-list-ul" style="color: var(--primary);"></i> Detailed Data Summary</h3>
+            <div class="table-responsive">
+                <table>
+                    <thead id="reportHead"></thead>
+                    <tbody id="reportTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="reports.js"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-page: #f4f7fe; 
+            --accent-indigo: #4318ff;
+            --logo-cyan: #00d2ff;
+            --text-main: #1b2559;
+            --text-grey: #a3aed0;
+            --card-shadow: 0px 18px 40px rgba(112, 144, 176, 0.12);
+        }
+
+        body { 
+            padding: 40px; 
+            background-color: var(--bg-page); 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--text-main);
+            margin: 0;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+
+        .container { max-width: 1100px; margin: auto; }
+
+        .nav-header { display: flex; gap: 15px; margin-bottom: 25px; }
+        .btn-secondary { 
+            padding: 12px 22px; cursor: pointer; border-radius: 15px; 
+            border: 1px solid #e9edf7; background: white; 
+            color: var(--text-grey); font-weight: 700; display: flex; align-items: center; gap: 10px;
+            box-shadow: var(--card-shadow); transition: 0.3s;
+        }
+        .btn-secondary:hover { background: var(--accent-indigo); color: white; }
+
+        .form-container { 
+            background: white; padding: 30px; border-radius: 25px; 
+            margin-bottom: 40px; box-shadow: var(--card-shadow);
+            border: 1px solid #f1f4f9;
+        }
+
+        .marking-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .marking-table th { text-align: left; padding: 12px; color: var(--text-grey); font-size: 0.85rem; border-bottom: 1px solid #eee; }
+        .marking-table td { padding: 15px 12px; border-bottom: 1px solid #f8f9fa; font-weight: 600; }
+
+        input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; accent-color: var(--accent-indigo); }
+
+        .btn-group { display: flex; gap: 15px; margin-top: 20px; }
+        
+        .btn-primary { 
+            background: var(--accent-indigo); color: white; border: none; padding: 14px 28px; 
+            border-radius: 15px; cursor: pointer; font-weight: 800; display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 10px 20px rgba(67, 24, 255, 0.2);
+        }
+
+        .btn-history-nav { 
+            background: var(--logo-cyan); color: white; border: none; padding: 14px 28px; 
+            border-radius: 15px; cursor: pointer; font-weight: 800; display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.2);
+        }
+
+        .history-section { 
+            background: white; padding: 25px; border-radius: 25px 25px 0 0; 
+            border: 1px solid #f1f4f9; 
+        }
+        .search-box { display: flex; gap: 15px; margin-top: 15px; }
+
+        .table-wrapper {
+            background: white; border-radius: 0 0 25px 25px; overflow: hidden;
+            box-shadow: var(--card-shadow); border: 1px solid #f1f4f9;
+        }
+        table.styled-table { width: 100%; border-collapse: collapse; }
+        .styled-table th { background: #fcfdfe; padding: 18px; text-align: left; color: var(--text-grey); font-weight: 800; border-bottom: 2px solid #f4f7fe; }
+        .styled-table td { padding: 18px; border-bottom: 1px solid #f4f7fe; font-weight: 600; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2><i class="fas fa-calendar-check" style="color: var(--accent-indigo);"></i> Attendance Management</h2>
+
+        <div class="nav-header">
+            <button onclick="window.location.href='../dashboard/dashboard.html'" class="btn-secondary">
+                <i class="fas fa-arrow-left"></i> Dashboard
+            </button>
+        </div>
+
+        <div class="form-container" id="markPanel">
+            <h3>Mark Attendance for Today</h3>
+            <p style="font-size: 0.9em; color: var(--text-grey);">Select the employees who are present today.</p>
+            
+            <table class="marking-table">
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>ID</th>
+                        <th>Status (Present?)</th>
+                    </tr>
+                </thead>
+                <tbody id="employeeList">
+                    </tbody>
+            </table>
+
+            <div class="btn-group">
+                <button onclick="saveAttendance()" class="btn-primary">
+                    <i class="fas fa-save"></i> Save Attendance
+                </button>
+                <button onclick="toggleHistory()" class="btn-history-nav">
+                    <i class="fas fa-history"></i> View History
+                </button>
+            </div>
+        </div>
+
+        <div id="historyModule" style="display: none; margin-top: 50px;">
+            <div class="history-section">
+                <h3><i class="fas fa-folder-open" style="color: var(--logo-cyan);"></i> Attendance History</h3>
+                <div class="search-box">
+                    <select id="filterMonth" style="padding: 10px; border-radius: 10px; border: 1px solid #ddd;">
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March" selected>March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                    </select>
+                    <button onclick="searchHistory()" class="btn-history-nav" style="padding: 10px 20px;">Search 🔍</button>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>Name</th>
+                            <th>Month</th>
+                            <th>Present</th>
+                            <th>Absent</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendanceBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="attendance.js"></script>
+</body>
+</html>
