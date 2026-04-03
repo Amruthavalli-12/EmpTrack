@@ -6,6 +6,6 @@ const AttendanceSchema = new mongoose.Schema({
     present: { type: Number, default: 0 },
     absent: { type: Number, default: 0 }
 }, { timestamps: true
-});
+}); 
 
 module.exports = mongoose.model('Attendance', AttendanceSchema);
