@@ -19,7 +19,7 @@ Managing a workforce requires precision. **EmpTrack** provides administrators wi
 
 ### # 📂 SYSTEM MODULES
 
-## ## ### # 🛠️ ADMIN CONTROL MODULES (MANAGEMENT)
+##  🛠️ ADMIN CONTROL MODULES (MANAGEMENT)
 
 1.  **🔐 Admin Auth & Access:** Secure login for HR/Management to handle sensitive employee data.
 2.  **👥 Employee Lifecycle (CRUD):** * **Onboarding:** Add employees with Dept, Designation, and Base Salary.
