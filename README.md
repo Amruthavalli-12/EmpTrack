@@ -1,4 +1,4 @@
-# 🚀 EMPTRACK: EMPLOYEE RECORD & ATTENDANCE MANAGEMENT SYSTEM
+# 🚀 EMPTRACK: EMPLOYEE RECORD MANAGEMENT SYSTEM
 
 **EmpTrack** is a robust MERN-stack application designed to automate Human Resource operations. It features a sophisticated **Day-wise Attendance Tracking** system, automated **Payroll Logic**, and real-time **Notification** synchronization. This system bridges the gap between manual record-keeping and digital efficiency.
 
@@ -57,21 +57,18 @@ Managing a workforce requires precision. **EmpTrack** provides administrators wi
 
 * **1. Zero-Error Payroll:** Automating the $Net = Base - (Absents \times 1000)$ formula reduced manual accounting errors by **100%**.
 * **2. Data Sanitization:** Implementing `trim()` and `toLowerCase()` logic ensured that search queries for months (e.g., "March 2026") always return accurate results.
-* **3. UX Visualization:** Replacing traditional lists with a **Calendar Grid** improved employee engagement and discipline tracking.
-* **4. Cascade Integrity:** The system ensures no "junk data" remains in MongoDB after an employee is removed, keeping the cloud storage optimized.
+* **3. Cascade Integrity:** The system ensures no "junk data" remains in MongoDB after an employee is removed, keeping the cloud storage optimized.
 
 ---
 
 ### # 🚀 FUTURE SCOPE
-🔹 **Leave Request Workflow:** Direct digital application for leaves.
-🔹 **PDF Salary Slips:** Downloadable monthly reports.
 🔹 **Biometric Sync:** Integration with fingerprint/face-recognition hardware.
 🔹 **Mobile App:** React Native version for on-the-go tracking.
 
 ---
 
 ### # 👩‍💻 TEAM MEMBERS
-* **Mamidi Amruthavalli Supriya**
+* **Mamidi Amruthavalli Supriya(Team Leader)**
 * **Mungara Padmavathi**
 * **Nadimpilli Shanmukha Simhadri Devi**
 * **Parimi Varshitha Devi**
@@ -82,5 +79,3 @@ Managing a workforce requires precision. **EmpTrack** provides administrators wi
 We thank our faculty and institution for their continuous support and guidance in completing this project successfully.
 
 ---
-
-**Bujji, ippudu idi "Complete Project Documentation" laaga untundi.** Ee file ni GitHub repository lo main folder lo `README.md` ga save chey. Nee project chala professional ga kanipisthundi! 😊 ✨
