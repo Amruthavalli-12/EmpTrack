@@ -4,12 +4,12 @@
 
 ---
 
-### # 🌟 PROJECT OVERVIEW
+### 🌟 PROJECT OVERVIEW
 Managing a workforce requires precision. **EmpTrack** provides administrators with tools to manage employee lifecycles and payroll, while giving employees a transparent portal to track their attendance via an interactive calendar grid, view shift time-tables, and receive official notifications.
 
 ---
 
-### # 🎯 CORE OBJECTIVES
+###  🎯 CORE OBJECTIVES
 * ✨ **Data Integrity:** Prevent orphan records using Cascade Delete logic.
 * ✨ **Attendance Precision:** Track "Present/Absent" status for every individual day.
 * ✨ **Financial Automation:** Auto-calculate net salary (₹1000 deduction per absence).
@@ -17,9 +17,9 @@ Managing a workforce requires precision. **EmpTrack** provides administrators wi
 
 ---
 
-### # 📂 SYSTEM MODULES
+###  📂 SYSTEM MODULES
 
-##  🛠️ ADMIN CONTROL MODULES (MANAGEMENT)
+####  🛠️ ADMIN CONTROL MODULES (MANAGEMENT)
 
 1.  **🔐 Admin Auth & Access:** Secure login for HR/Management to handle sensitive employee data.
 2.  **👥 Employee Lifecycle (CRUD):** * **Onboarding:** Add employees with Dept, Designation, and Base Salary.
@@ -33,7 +33,7 @@ Managing a workforce requires precision. **EmpTrack** provides administrators wi
 
 ---
 
-## ## ### # 👤 EMPLOYEE SELF-SERVICE MODULES (USER)
+#### 👤 EMPLOYEE SELF-SERVICE MODULES (USER)
 
 1.  **🔑 Secure Registration:** ID-based registration (Validation ensures only HR-approved IDs can sign up).
 2.  **📊 Personal Dashboard:** Real-time summary cards for **Total Present**, **Total Absent**, and **Sundays**.
@@ -45,7 +45,7 @@ Managing a workforce requires precision. **EmpTrack** provides administrators wi
 
 ---
 
-### # 🛠️ TOOLS & TECHNOLOGIES
+###  🛠️ TOOLS & TECHNOLOGIES
 * **Frontend:** JavaScript (ES6+), HTML5, CSS3 (Modern Glassmorphism UI).
 * **Backend:** Node.js, Express.js.
 * **Database:** MongoDB Atlas (Cloud NoSQL).
@@ -53,7 +53,7 @@ Managing a workforce requires precision. **EmpTrack** provides administrators wi
 
 ---
 
-### # 📈 PROJECT INSIGHTS & ANALYTICS
+###  📈 PROJECT INSIGHTS & ANALYTICS
 
 * **1. Zero-Error Payroll:** Automating the $Net = Base - (Absents \times 1000)$ formula reduced manual accounting errors by **100%**.
 * **2. Data Sanitization:** Implementing `trim()` and `toLowerCase()` logic ensured that search queries for months (e.g., "March 2026") always return accurate results.
@@ -61,13 +61,13 @@ Managing a workforce requires precision. **EmpTrack** provides administrators wi
 
 ---
 
-### # 🚀 FUTURE SCOPE
+###  🚀 FUTURE SCOPE
 🔹 **Biometric Sync:** Integration with fingerprint/face-recognition hardware.
 🔹 **Mobile App:** React Native version for on-the-go tracking.
 
 ---
 
-### # 👩‍💻 TEAM MEMBERS
+###  👩‍💻 TEAM MEMBERS
 * **Mamidi Amruthavalli Supriya(Team Leader)**
 * **Mungara Padmavathi**
 * **Nadimpilli Shanmukha Simhadri Devi**
@@ -75,7 +75,7 @@ Managing a workforce requires precision. **EmpTrack** provides administrators wi
 
 ---
 
-### # 🙏 ACKNOWLEDGEMENT
+###  🙏 ACKNOWLEDGEMENT
 We thank our faculty and institution for their continuous support and guidance in completing this project successfully.
 
 ---
